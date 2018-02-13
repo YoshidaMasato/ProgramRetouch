@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 
 import base.DBManager;
+import beans.BuyDataBeans;
 import beans.UserDataBeans;
 import ec.EcHelper;
 
@@ -223,6 +224,39 @@ public class UserDAO {
 
 		System.out.println("overlap check has been completed");
 		return isOverlap;
+	}
+
+	public static BuyDataBeans getBuyDataBeansByUserId(int userId) throws SQLException {
+		BuyDataBeans bdb = new BuyDataBeans();
+		Connection conn = null;
+		PreparedStatement st = null;
+
+		try {
+			conn = DBManager.getConnection();
+			st = conn.prepareStatement("SELECT * FROM t_buy WHERE user_id =" + userId);
+			ResultSet rs = st.executeQuery();
+
+			while(rs.next()) {
+				bdb.setId(rs.getInt("id"));
+				bdb.setUserId(rs.getInt("user_id"));
+				bdb.setTotalPrice(rs.getInt("total_price"));
+				bdb.setDelivertMethodId(rs.getInt("delivery_method_id"));
+				bdb.setBuyDate(rs.getDate("create_date"));
+			}
+
+			st.close();
+
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		}finally {
+			if(conn != null) {
+				conn.close();
+			}
+		}
+
+		System.out.println("searching BuyDataBeans by userId has been completed");
+		return bdb;
 	}
 
 }

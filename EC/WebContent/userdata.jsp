@@ -1,7 +1,9 @@
+<%@page import="beans.DeliveryMethodDataBeans"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="beans.BuyDataBeans"%>
 <%@ page import="beans.UserDataBeans"%>
 <%@ page import=" java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +13,7 @@
 <%
 	String validationMessage = (String) request.getAttribute("validationMessage");
 	UserDataBeans udb = (UserDataBeans)request.getAttribute("udb");
+	ArrayList<BuyDataBeans> bdbList = (ArrayList<BuyDataBeans>) request.getAttribute("bdbList");
 %>
 </head>
 <body>
@@ -73,18 +76,18 @@
 							</thead>
 							<tbody>
 
-								<tr>
-									<td class="center"><a href="UserBuyHistoryDetail?buy_id=1" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-									<td class="center">1234年56月78日90時12分</td>
-									<td class="center">サンプル配送料金</td>
-									<td class="center"><123456789円円</td>
-								</tr>
-								<tr>
-									<td class="center"><a href="UserBuyHistoryDetail?buy_id=2" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-									<td class="center">1234年56月78日90時12分</td>
-									<td class="center">サンプル配送料金</td>
-									<td class="center"><123456789円円</td>
-								</tr>
+								<%
+								for(BuyDataBeans bdb : bdbList){
+								%>
+									<tr>
+										<td class="center"><a href="UserBuyHistoryDetail?buy_id=<%=bdb.getId()%>" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
+										<td class="center"><%=bdb.getFormatDate()%></td>
+										<td class="center"><%=bdb.getDeliveryMethodName()%></td>
+										<td class="center"><%=bdb.getTotalPrice()%>円</td>
+									</tr>
+								<%
+								}
+								%>
 
 							</tbody>
 						</table>

@@ -2,6 +2,7 @@
 <%@ page import="beans.ItemDataBeans"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="beans.BuyDataBeans"%>
+<%@ page import="beans.DeliveryMethodDataBeans" %>
 <!DOCTYPE html>
 <html>
 <head>
