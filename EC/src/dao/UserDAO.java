@@ -111,7 +111,8 @@ public class UserDAO {
 		PreparedStatement st = null;
 		try {
 			con = DBManager.getConnection();
-			st = con.prepareStatement("SELECT id,name, login_id, address FROM t_user WHERE id =" + userId);
+			st = con.prepareStatement("SELECT id,name, login_id, address FROM t_user WHERE id = ?");
+			st.setInt(1, userId);
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -161,7 +162,8 @@ public class UserDAO {
 			st.executeUpdate();
 			System.out.println("update has been completed");
 
-			st = con.prepareStatement("SELECT name, login_id, address FROM t_user WHERE id=" + udb.getId());
+			st = con.prepareStatement("SELECT name, login_id, address FROM t_user WHERE id=");
+			st.setInt(1, udb.getId());
 			ResultSet rs = st.executeQuery();
 
 			while (rs.next()) {
@@ -233,7 +235,8 @@ public class UserDAO {
 
 		try {
 			conn = DBManager.getConnection();
-			st = conn.prepareStatement("SELECT * FROM t_buy WHERE user_id =" + userId);
+			st = conn.prepareStatement("SELECT * FROM t_buy WHERE user_id =");
+			st.setInt(1, userId);
 			ResultSet rs = st.executeQuery();
 
 			while(rs.next()) {
